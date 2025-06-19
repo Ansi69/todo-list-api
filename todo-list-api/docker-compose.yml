@@ -1,0 +1,42 @@
+services:
+  web:
+    image: nginx:latest # Веб-сервер (nginx)
+    volumes:
+      - ./:/app
+      - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf:ro # Прокидываем конфиг nginx в контейнер
+    ports:
+      - "80:80"
+    environment:
+      - NGINX_HOST=localhost
+    depends_on:
+      php-fpm:
+        condition: service_started
+    networks:
+      - todo-app
+  php-fpm:
+    build:
+      context: ./
+      dockerfile: ./docker/app/Dockerfile # Тут у нас PHP 8.3
+      args:
+        XDEBUG: "true" # XDEBUG понадобится для тестов
+    volumes:
+      - ./:/app
+    ports:
+      - "8000:8000"
+    networks:
+      - todo-app
+    depends_on:
+      mysql:
+        condition: service_started
+  mysql:
+    image: mysql:8.0  # БД (MySQL 8.0)
+    ports:
+      - "${MYSQL_PORT:-3306}:3306"  # Порт по умолчанию 3306, можно изменить через переменную. Открываем порт на localhost для подключения к БД
+    environment:
+      MYSQL_DATABASE: "todo-db" # Имя БД
+      MYSQL_ROOT_PASSWORD: "password"  # Пароль для root-пользователя
+    networks:
+      - todo-app
+
+networks:
+  todo-app:
