@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Notes extends Model
+class Note extends Model
 {
     protected $fillable = [
         'title',
@@ -19,10 +19,10 @@ class Notes extends Model
     ];
     public function Notes(): HasOne
     {
-        return $this->hasOne(Statuses::class);
+        return $this->hasOne(Status::class);
     }
 
-    public function Roles(): HasMany
+    public function User(): HasMany
     {
         return $this->hasMany(User::class);
     }
