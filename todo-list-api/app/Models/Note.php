@@ -23,9 +23,9 @@ class Note extends Model
         return $this->hasOne(Status::class);
     }
 
-    public function user(): HasMany
+    public function user(): HasOne
     {
-        return $this->hasMany(User::class);
+        return $this->hasOne(User::class);
     }
 }
 
