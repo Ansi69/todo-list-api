@@ -51,7 +51,7 @@ class User extends Authenticatable
 
     public function role(): HasOne
     {
-        return $this->hasMany(Role::class);
+        return $this->hasOne(Role::class);
     }
 
     public function notes(): HasMany
