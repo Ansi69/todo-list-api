@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class User extends Authenticatable
 {
@@ -61,6 +62,11 @@ class User extends Authenticatable
     public function isAdmin()
     {
         return $this->roles()->where('name', 'admin')->exists();
+    }
+
+    public function get_user_by_id(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
     }
 
 }

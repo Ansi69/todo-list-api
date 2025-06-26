@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Note extends Model
 {
@@ -19,12 +20,18 @@ class Note extends Model
     ];
     public function notes(): HasOne
     {
-        return $this->hasOne(Status::class);
+        return $this->hasOne(Note::class);
     }
 
     public function user(): HasMany
     {
         return $this->hasMany(User::class);
+    }
+
+    // получить юзера по посту
+    public function get_user_by_post(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
     }
 }
 
