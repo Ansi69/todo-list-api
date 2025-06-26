@@ -12,13 +12,8 @@ class Role extends Model
         'name',
     ];
 
-    public function user(): HasMany
+    public function users(): HasMany
     {
         return $this->hasMany(User::class);
-    }
-
-    public function get_user_by_role(): BelongsTo
-    {
-        return $this->belongsTo(User::class);
     }
 }

@@ -18,20 +18,14 @@ class Note extends Model
         'deleted_at',
         'status_id',
     ];
-    public function notes(): HasOne
+    public function status(): HasOne
     {
-        return $this->hasOne(Note::class);
+        return $this->hasOne(Status::class);
     }
 
     public function user(): HasMany
     {
         return $this->hasMany(User::class);
-    }
-
-    // получить юзера по посту
-    public function get_user_by_post(): BelongsTo
-    {
-        return $this->belongsTo(User::class);
     }
 }
 

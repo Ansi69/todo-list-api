@@ -12,13 +12,8 @@ class Status extends Model
         'name',
     ];
 
-    public function status(): HasMany
+    public function notes(): HasMany
     {
         return $this->hasMany(Note::class);
-    }
-
-    public function get_note_by_status(): BelongsTo
-    {
-        return $this->belongsTo(note::class);
     }
 }
