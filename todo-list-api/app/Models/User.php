@@ -63,10 +63,4 @@ class User extends Authenticatable
     {
         return $this->roles()->where('name', 'admin')->exists();
     }
-
-    public function get_user_by_id(): BelongsTo
-    {
-        return $this->belongsTo(User::class);
-    }
-
 }
