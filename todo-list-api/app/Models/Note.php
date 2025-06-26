@@ -17,12 +17,12 @@ class Note extends Model
         'deleted_at',
         'status_id',
     ];
-    public function Notes(): HasOne
+    public function notes(): HasOne
     {
         return $this->hasOne(Status::class);
     }
 
-    public function User(): HasMany
+    public function user(): HasMany
     {
         return $this->hasMany(User::class);
     }
