@@ -49,7 +49,7 @@ class User extends Authenticatable
         ];
     }
 
-    public function role(): HasMany
+    public function role(): HasOne
     {
         return $this->hasMany(Role::class);
     }
@@ -61,6 +61,6 @@ class User extends Authenticatable
 
     public function isAdmin()
     {
-        return $this->roles()->where('name', 'admin')->exists();
+        return $this->role->name === 'admin';
     }
 }
