@@ -2,23 +2,18 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class User extends Authenticatable
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
     /**
-     * The attributes that are mass assignable.
-
-     * @var list<string>
+     * @var string[]
      */
     protected $fillable = [
         'name',
@@ -27,9 +22,7 @@ class User extends Authenticatable
     ];
 
     /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var list<string>
+     * @var string[]
      */
     protected $hidden = [
         'password',
@@ -37,9 +30,7 @@ class User extends Authenticatable
     ];
 
     /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
+     * @return string[]
      */
     protected function casts(): array
     {
@@ -49,18 +40,27 @@ class User extends Authenticatable
         ];
     }
 
-    public function role(): HasOne
+    /**
+     * @return BelongsTo
+     */
+    public function role(): BelongsTo
     {
-        return $this->hasOne(Role::class);
+        return $this->belongsTo(Role::class);
     }
 
+    /**
+     * @return HasMany
+     */
     public function notes(): HasMany
     {
         return $this->hasMany(Note::class);
     }
 
-    public function isAdmin()
+    /**
+     * @return bool
+     */
+    public function isAdmin(): bool
     {
-        return $this->role->name === 'admin';
+        return $this->role?->name === 'admin';
     }
 }

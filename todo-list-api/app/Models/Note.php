@@ -3,29 +3,37 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Note extends Model
 {
+    use SoftDeletes;
+
+    /**
+     * @var string[]
+     */
     protected $fillable = [
         'title',
         'content',
         'user_id',
-        'created_at',
-        'updated_at',
-        'deleted_at',
         'status_id',
     ];
-    public function status(): HasOne
+
+    /**
+     * @return BelongsTo
+     */
+    public function status(): BelongsTo
     {
-        return $this->hasOne(Status::class);
+        return $this->belongsTo(Status::class);
     }
 
-    public function user(): HasOne
+    /**
+     * @return BelongsTo
+     */
+    public function user(): BelongsTo
     {
-        return $this->hasOne(User::class);
+        return $this->belongsTo(User::class);
     }
 }
 
