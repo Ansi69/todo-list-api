@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Domain\Enums\RoleEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -20,6 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role_id',
     ];
 
     /**
@@ -62,6 +64,6 @@ class User extends Authenticatable
      */
     public function isAdmin(): bool
     {
-        return $this->role?->name === 'admin';
+        return $this->role_id === RoleEnum::admin->value;
     }
 }

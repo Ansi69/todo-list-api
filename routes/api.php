@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\NoteController;
+use App\Http\Controllers\Api\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,4 +19,12 @@ use Illuminate\Support\Facades\Route;
 Route::group(['prefix' => 'auth'], function () {
     Route::post('login', [AuthController::class, 'login']);
     Route::get('logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
+});
+
+Route::group(['middleware' => ['auth:sanctum']], function () {
+
+    Route::group(['where' => ['user' => '[0-9]+']], function () {
+        Route::apiResource('users', UserController::class);
+        Route::get('users/self', [UserController::class, 'self']);
+    });
 });
