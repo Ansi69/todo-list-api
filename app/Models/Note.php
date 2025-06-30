@@ -22,6 +22,18 @@ class Note extends Model
     ];
 
     /**
+     * Для загрузки удалённых Note
+     *
+     * @param $value
+     * @param $field
+     * @return Model|null
+     */
+    public function resolveRouteBinding($value, $field = null): Model|null
+    {
+        return $this->withTrashed()->where('id', $value)->firstOrFail();
+    }
+
+    /**
      * @return BelongsTo
      */
     public function status(): BelongsTo
