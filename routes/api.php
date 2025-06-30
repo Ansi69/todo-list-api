@@ -27,4 +27,9 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::apiResource('users', UserController::class);
         Route::get('users/self', [UserController::class, 'self']);
     });
+
+    Route::group(['where' => ['note' => '[0-9]+']], function () {
+        Route::apiResource('notes', NoteController::class);
+        Route::get('notes/list', [NoteController::class, 'list']);
+    });
 });
